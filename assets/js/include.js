@@ -2,51 +2,80 @@
 function includeHTML() {
     const headerElement = document.getElementById('header');
     const footerElement = document.getElementById('footer');
-    
+
     if (headerElement) {
         fetch('header.html')
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) throw new Error('Header fetch failed');
+                return response.text();
+            })
             .then(data => {
                 headerElement.innerHTML = data;
-                // Initialize mobile menu after header is loaded
-                initMobileMenu();
+                // Call initMobileMenu only after header is loaded
+                if (typeof initMobileMenu === 'function') {
+                    initMobileMenu();
+                }
+            })
+            .catch(error => {
+                console.error('Error loading header:', error);
             });
     }
-    
+
     if (footerElement) {
         fetch('footer.html')
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) throw new Error('Footer fetch failed');
+                return response.text();
+            })
             .then(data => {
                 footerElement.innerHTML = data;
                 // Update copyright year
-                document.getElementById('year').textContent = new Date().getFullYear();
+                const yearSpan = document.getElementById('year');
+                if (yearSpan) {
+                    yearSpan.textContent = new Date().getFullYear();
+                }
+            })
+            .catch(error => {
+                console.error('Error loading footer:', error);
             });
     }
 }
+
 
 // Initialize mobile menu toggle
 function initMobileMenu() {
     const menuToggle = document.querySelector('.menu-toggle');
     const mainNav = document.querySelector('.main-nav');
-    
+
     if (menuToggle && mainNav) {
         menuToggle.addEventListener('click', () => {
             mainNav.classList.toggle('active');
-            menuToggle.querySelector('i').classList.toggle('fa-times');
-            menuToggle.querySelector('i').classList.toggle('fa-bars');
+
+            const icon = menuToggle.querySelector('i');
+            if (icon) {
+                icon.classList.toggle('fa-times');
+                icon.classList.toggle('fa-bars');
+            }
         });
-        
-        // Close menu when clicking on a link
+
         const navLinks = document.querySelectorAll('.main-nav a');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
                 mainNav.classList.remove('active');
-                menuToggle.querySelector('i').classList.add('fa-bars');
-                menuToggle.querySelector('i').classList.remove('fa-times');
+
+                const icon = menuToggle.querySelector('i');
+                if (icon) {
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
             });
         });
     }
 }
+
+// Call after DOM is ready
+document.addEventListener('DOMContentLoaded', initMobileMenu);
+
 
 // Smooth scrolling for anchor links
 document.addEventListener('DOMContentLoaded', () => {

@@ -120,7 +120,7 @@ section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
+    padding: 20px 20px;
 }
 
 .logo a {
@@ -134,9 +134,17 @@ section {
     color: var(--primary-color);
 }
 
+.mobile-buttons{
+  display: none;
+}
+.mobile-logo{
+  display: none;
+}
+
 .main-nav ul {
     display: flex;
     list-style: none;
+    margin-top: 20px;
 }
 
 .main-nav ul li {
@@ -211,7 +219,7 @@ section {
   
   .download-cv:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
+    box-shadow: 0 8px 20px rgba(57, 141, 84, 0.3);
   }
   
   .download-cv .icon {
@@ -650,32 +658,78 @@ footer {
         display: block;
     }
     
-    .main-nav {
+.main-nav {
         position: fixed;
         top: 85px;
-        right: -100%;
-        width: 100%;
-        height: calc(100vh - 80px);
-        background: green;
-        transition: all 0.3s ease;
+        right: 0; /* Change from right: 0 to left: 0 */
+        width: 0%;
+        height: calc(100vh - 85px);
+        background: linear-gradient(135deg, #305198, #cbdef8);
         padding: 40px 0;
+        z-index: 999;
+
+        /* Hidden by default */
+        opacity: 0;
+        pointer-events: none;
+        transform: translateX(100%); /* slide out to the right */
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        visibility: hidden;
     }
-    
+
     .main-nav.active {
-        right: -20%;
+        opacity: 1;
+        width: 60%;
+        pointer-events: auto;
+        transform: translateX(0);
+        visibility: visible;
     }
     
     .main-nav ul {
         flex-direction: column;
-        align-items: center;
     }
     
     .main-nav ul li {
         margin: 15px 0;
     }
+    .main-nav ul li a {
+        color: white;
+        text-align: left;
+    }
+
+    .mobile-buttons{
+      display: block;
+      padding: 0px 30px;
+    }
+    .mobile-buttons .view-work{
+      color: rgb(244, 241, 241);
+      background: linear-gradient(135deg, #2ECC71, #3498DB);
+      padding: 10px 10px;
+      border-radius: 10px;
+      text-align: center; 
+    }
+    .mobile-buttons .mobile-cv{
+      color: rgb(253, 250, 250);
+      background: linear-gradient(135deg, #d09f77, #1191e7);
+      padding: 10px 10px;
+      border-radius: 10px;
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .mobile-logo{
+      display: block;
+      padding: 0px 30px;
+    }
+    .mobile-logo a img{
+      width: 170px;
+      height: 30px;
+    }
     
     .hero {
         text-align: center;
+    }
+    .animate-fade img{
+      display: none;
     }
     
     .hero-content {

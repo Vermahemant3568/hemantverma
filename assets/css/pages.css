@@ -1,0 +1,155 @@
+/* Base Styles */
+body {
+  font-family: 'Inter', sans-serif;
+  color: #e4e1e1;
+  background-color: #c2bebe;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 600;
+  color: #2d2d2d;
+}
+
+p {
+  color: #3a3a3a;
+  margin-bottom: 1rem;
+}
+
+section {
+  padding: 60px 0;
+}
+
+.container {
+  max-width: 1140px;
+}
+
+/* Header */
+.header {
+  height: 400px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  color: #ffffff;
+}
+
+.header .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(151, 148, 148, 0.4);
+  z-index: 1;
+}
+
+.header h1 {
+  font-size: 2.8rem;
+  z-index: 2;
+  position: relative;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  display: inline-block;
+  backdrop-filter: blur(4px);
+}
+
+/* Intro Section */
+.intro-section img {
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.intro-section ul li {
+  margin-bottom: 0.5rem;
+  color: #4b4b4b;
+}
+
+/* Challenges & Research */
+.challenges-section,
+.research-section {
+}
+
+/* Personas */
+.persona {
+  background-color: #e7e4e4;
+  border: 1px solid #bbb;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: #2c2c2c;
+}
+
+.persona:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Sitemap */
+.sitemap-section img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Logo Section */
+.logo-section img {
+  max-width: 80%;
+  height: auto;
+  transition: transform 0.3s ease;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.logo-section img:hover {
+  transform: scale(1.05);
+}
+
+/* Color Palette */
+.color-box {
+  width: 150px;
+  text-align: center;
+  font-weight: 600;
+  border: 1px solid #999;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Typography Section */
+.typography-section p {
+  margin-bottom: 1.25rem;
+  color: #3a3a3a;
+}
+
+/* Conclusion Section */
+.conclusion-section {
+  text-align: left;
+}
+
+.conclusion-section p {
+  font-size: 1.1rem;
+  color: #3f3f3f;
+  text-align: left;
+}
+
+/* Utilities */
+a, .btn {
+  color: #0d6efd;
+  transition: color 0.3s ease;
+}
+
+a:hover, .btn:hover {
+  color: #0056b3;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .color-box {
+    width: 100px;
+    font-size: 0.875rem;
+  }
+}
