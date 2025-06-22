@@ -8,6 +8,9 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,40 +19,121 @@
     <style>
         body { font-family: 'Roboto', sans-serif; }
         h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .gradient-text { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 text-gray-800">
 
-    <header class="bg-white/80 backdrop-blur-md shadow-sm fixed top-0 left-0 right-0 z-50">
+    <header class="bg-white/90 backdrop-blur-md shadow-lg border-b border-purple-100 fixed top-0 left-0 right-0 z-50">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-4">
-                <a href="index.html" class="text-2xl font-bold text-purple-600">HV</a>
-                <nav>
-                    <a href="index.html#projects" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
-                        Back to Projects
-                    </a>
+                <a href="index.html" class="text-2xl font-bold gradient-text">HV</a>
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="index.html#about" class="text-gray-600 hover:text-purple-600 transition duration-300">About</a>
+                    <a href="index.html#projects" class="text-gray-600 hover:text-purple-600 transition duration-300">Projects</a>
+                    <a href="blog.html" class="text-gray-600 hover:text-purple-600 transition duration-300">Blog</a>
+                    <a href="index.html#contact" class="text-gray-600 hover:text-purple-600 transition duration-300">Contact</a>
                 </nav>
+                <a href="index.html#projects" class="gradient-bg hover:shadow-lg text-white font-bold py-2 px-6 rounded-full transition-all duration-300 transform hover:scale-105">
+                    Back to Projects
+                </a>
             </div>
         </div>
     </header>
 
     <main class="pt-24">
-        <section class="project-detail py-12">
+        <!-- Project Hero Section -->
+        <section class="py-16 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white">
+            <div class="container mx-auto px-4 text-center">
+                <h1 id="project-title" class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">Loading...</h1>
+                <p id="project-subtitle" class="text-xl text-white/90 mb-8">Loading...</p>
+                <div id="project-tech-hero" class="flex flex-wrap justify-center gap-3 mb-8">
+                    <!-- Tech stack badges will be loaded here -->
+                </div>
+                <div id="project-links" class="flex justify-center space-x-4">
+                    <!-- Project links will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Details -->
+        <section class="py-20 bg-white">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <div class="grid lg:grid-cols-2 gap-12 items-start">
+                    <!-- Project Image -->
+                    <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-8 rounded-2xl shadow-lg">
+                        <img id="project-main-image" src="assets/images/placeholder.png" alt="Project Image" class="w-full h-80 object-cover rounded-xl shadow-lg mb-6">
+                        <div id="project-gallery" class="grid grid-cols-3 gap-4">
+                            <!-- Additional images will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Project Info -->
+                    <div class="space-y-8">
+                        <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-8 rounded-2xl shadow-lg">
+                            <h2 class="text-3xl font-bold mb-4 gradient-text">About This Project</h2>
+                            <div id="project-description" class="text-gray-700 leading-relaxed text-lg">
+                                <p>Loading project description...</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gradient-to-r from-green-50 to-blue-50 p-8 rounded-2xl shadow-lg">
+                            <h3 class="text-2xl font-bold mb-4 gradient-text">Project Details</h3>
+                            <div id="project-details" class="space-y-3 text-gray-700">
+                                <div class="flex items-center"><i class="fas fa-calendar text-purple-600 mr-3"></i><span>Duration: <span id="project-duration">Loading...</span></span></div>
+                                <div class="flex items-center"><i class="fas fa-user text-purple-600 mr-3"></i><span>Role: <span id="project-role">Loading...</span></span></div>
+                                <div class="flex items-center"><i class="fas fa-users text-purple-600 mr-3"></i><span>Team Size: <span id="project-team">Loading...</span></span></div>
+                                <div class="flex items-center"><i class="fas fa-trophy text-purple-600 mr-3"></i><span>Status: <span id="project-status">Loading...</span></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features & Challenges -->
+        <section class="py-20 bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="bg-white/20 backdrop-blur-sm p-8 rounded-2xl border border-white/30">
+                        <h3 class="text-2xl font-bold mb-6 flex items-center">
+                            <i class="fas fa-star mr-3"></i>Key Features
+                        </h3>
+                        <ul id="project-features" class="space-y-3">
+                            <li>Loading features...</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white/20 backdrop-blur-sm p-8 rounded-2xl border border-white/30">
+                        <h3 class="text-2xl font-bold mb-6 flex items-center">
+                            <i class="fas fa-lightbulb mr-3"></i>Challenges & Solutions
+                        </h3>
+                        <div id="project-challenges" class="space-y-4">
+                            <p>Loading challenges...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Projects -->
+        <section class="py-20 bg-white">
             <div class="container mx-auto px-4">
-                <div id="project-detail-content" class="bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
-                    <!-- Project details will be loaded here by JavaScript -->
-                    <p class="text-center">Loading project...</p>
+                <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Related Projects</h2>
+                <div id="related-projects" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Related projects will be loaded here -->
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="text-center py-8">
+    <footer class="gradient-bg text-center py-12">
         <div class="container mx-auto px-4">
-            <p class="text-gray-500">&copy; 2024 Hemant Verma. All Rights Reserved.</p>
+            <p class="text-white/80 text-lg">&copy; 2024 Hemant Verma. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <script type="module" src="assets/js/main.js"></script>
+    <script type="module" src="assets/js/project-detail.js"></script>
 </body>
-</html> 
+</html>

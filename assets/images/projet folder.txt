@@ -1,0 +1,14 @@
+├── index.html (✅ Updated - Mobile nav, dynamic content)
+├── project.html (✅ Existing - Works perfectly)
+├── blog.html (🆕 New - Blog listing page)
+├── blog-post.html (🆕 New - Individual blog posts)
+├── admin/
+│   ├── index.html (✅ Existing - Login page)
+│   └── dashboard.html (✅ Updated - All sections)
+└── assets/js/
+    ├── main.js (✅ Enhanced - Better path detection, mobile nav)
+    ├── dashboard.js (✅ Complete - All CRUD operations)
+    ├── blog.js (🆕 New - Blog functionality)
+    ├── blog-post.js (🆕 New - Individual posts)
+    ├── auth.js (✅ Existing - Works perfectly)
+    └── firebase-config.js (✅ Existing - Ready to use)
