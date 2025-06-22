@@ -642,17 +642,17 @@ async function loadContent(section) {
                     html += `
                         <div class="bg-gray-50 p-4 rounded-lg border">
                             <div class="flex justify-between items-start">
-                                <div class="flex-1">
+                                <div class="flex-1 pr-4">
                                     <h3 class="font-bold text-lg">${edu.degree}</h3>
                                     <p class="text-blue-600 font-medium">${edu.institution}</p>
                                     <p class="text-sm text-gray-500 mb-2">${edu.year}</p>
-                                    ${edu.description ? `<p class="text-sm text-gray-600">${edu.description}</p>` : ''}
+                                    ${edu.description ? `<p class="text-justify text-sm text-white-600">${edu.description}</p>` : ''}
                                 </div>
-                                <div class="flex space-x-2">
-                                    <button class="text-blue-500 hover:text-blue-700 p-2" onclick="editEducation(${index})">
+                                <div class="flex space-x-2 flex-shrink-0">
+                                    <button class="text-blue-500 hover:text-blue-700 p-2 rounded hover:bg-blue-50 transition-colors" onclick="editEducation(${index})" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button class="text-red-500 hover:text-red-700 p-2" onclick="deleteEducation(${index})">
+                                    <button class="text-red-500 hover:text-red-700 p-2 rounded hover:bg-red-50 transition-colors" onclick="deleteEducation(${index})" title="Delete">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
@@ -736,6 +736,131 @@ async function loadContent(section) {
                 } catch (error) {
                     contentDiv.insertAdjacentHTML('afterbegin', showError(error.message));
                     submitBtn.innerHTML = '<i class="fas fa-plus mr-2"></i>Add Education';
+                    submitBtn.disabled = false;
+                }
+            });
+            
+        } else if (section === 'awards') {
+            const docRef = doc(db, "portfolio", "awards");
+            const docSnap = await getDoc(docRef);
+            const data = docSnap.exists() ? docSnap.data() : { awards: [] };
+            
+            html = `
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-3xl font-bold mb-6 text-gray-800 border-b pb-4">Manage Awards & Certificates</h2>
+                    <div class="space-y-4 mb-8">
+            `;
+            
+            if (data.awards && data.awards.length > 0) {
+                data.awards.forEach((award, index) => {
+                    html += `
+                        <div class="bg-gray-50 p-4 rounded-lg border">
+                            <div class="flex justify-between items-start">
+                                <div class="flex-1 pr-4">
+                                    <h3 class="font-bold text-lg">${award.title}</h3>
+                                    <p class="text-blue-600 font-medium">${award.issuer}</p>
+                                    <p class="text-sm text-gray-500 mb-2">${award.date}</p>
+                                    ${award.description ? `<p class="text-sm text-gray-600">${award.description}</p>` : ''}
+                                    ${award.credentialUrl ? `<a href="${award.credentialUrl}" target="_blank" class="text-blue-500 hover:text-blue-700 text-sm mt-2 inline-block"><i class="fas fa-external-link-alt mr-1"></i>View Certificate</a>` : ''}
+                                </div>
+                                <div class="flex space-x-2 flex-shrink-0">
+                                    <button class="text-blue-500 hover:text-blue-700 p-2 rounded hover:bg-blue-50 transition-colors" onclick="editAward(${index})" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 p-2 rounded hover:bg-red-50 transition-colors" onclick="deleteAward(${index})" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                html += '<p class="text-gray-500 text-center py-8">No awards or certificates yet. Add your first one below!</p>';
+            }
+            
+            html += `
+                    </div>
+                    <div class="border-t pt-6">
+                        <h3 class="text-xl font-bold mb-4">Add New Award/Certificate</h3>
+                        <form id="award-form" class="space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Award/Certificate Title *</label>
+                                    <input type="text" id="award-title" placeholder="AWS Certified Developer" 
+                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Issuing Organization *</label>
+                                    <input type="text" id="award-issuer" placeholder="Amazon Web Services" 
+                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Date Received *</label>
+                                    <input type="text" id="award-date" placeholder="March 2024" 
+                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Credential URL</label>
+                                    <input type="url" id="award-url" placeholder="https://credential-url.com" 
+                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                                <textarea id="award-description" placeholder="Brief description of the award or certificate..." rows="3" 
+                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200">
+                                <i class="fas fa-plus mr-2"></i>Add Award/Certificate
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            `;
+            
+            contentDiv.innerHTML = html;
+            document.getElementById('award-form').addEventListener('submit', async e => {
+                e.preventDefault();
+                const submitBtn = e.target.querySelector('button[type="submit"]');
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Adding...';
+                submitBtn.disabled = true;
+                
+                try {
+                    const title = document.getElementById('award-title').value.trim();
+                    const issuer = document.getElementById('award-issuer').value.trim();
+                    const date = document.getElementById('award-date').value.trim();
+                    
+                    if (!title || !issuer || !date) {
+                        throw new Error('Title, issuer, and date are required');
+                    }
+                    
+                    const awardData = { title, issuer, date };
+                    const description = document.getElementById('award-description').value.trim();
+                    const credentialUrl = document.getElementById('award-url').value.trim();
+                    
+                    if (description) awardData.description = description;
+                    if (credentialUrl) awardData.credentialUrl = credentialUrl;
+                    
+                    let updatedAwards;
+                    const editIndex = e.target.dataset.editIndex;
+                    
+                    if (editIndex !== undefined) {
+                        updatedAwards = [...(data.awards || [])];
+                        updatedAwards[parseInt(editIndex)] = awardData;
+                        delete e.target.dataset.editIndex;
+                        submitBtn.innerHTML = '<i class="fas fa-plus mr-2"></i>Add Award/Certificate';
+                    } else {
+                        updatedAwards = [...(data.awards || []), awardData];
+                    }
+                    
+                    await setDoc(doc(db, "portfolio", "awards"), { awards: updatedAwards });
+                    loadContent('awards');
+                } catch (error) {
+                    contentDiv.insertAdjacentHTML('afterbegin', showError(error.message));
+                    submitBtn.innerHTML = '<i class="fas fa-plus mr-2"></i>Add Award/Certificate';
                     submitBtn.disabled = false;
                 }
             });
@@ -1035,5 +1160,46 @@ window.editExperience = async (index) => {
         }
     } catch (error) {
         alert('Error loading experience entry: ' + error.message);
+    }
+}
+
+window.deleteAward = async (index) => {
+    if(confirm('Are you sure you want to delete this award/certificate?')) {
+        try {
+            const docRef = doc(db, "portfolio", "awards");
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                const updatedAwards = data.awards.filter((_, i) => i !== index);
+                await setDoc(doc(db, "portfolio", "awards"), { awards: updatedAwards });
+                loadContent('awards');
+            }
+        } catch (error) {
+            alert('Error deleting award: ' + error.message);
+        }
+    }
+}
+
+window.editAward = async (index) => {
+    try {
+        const docRef = doc(db, "portfolio", "awards");
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            const award = data.awards[index];
+            
+            document.getElementById('award-title').value = award.title;
+            document.getElementById('award-issuer').value = award.issuer;
+            document.getElementById('award-date').value = award.date;
+            document.getElementById('award-description').value = award.description || '';
+            document.getElementById('award-url').value = award.credentialUrl || '';
+            
+            const form = document.getElementById('award-form');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-save mr-2"></i>Update Award/Certificate';
+            form.dataset.editIndex = index;
+        }
+    } catch (error) {
+        alert('Error loading award entry: ' + error.message);
     }
 }

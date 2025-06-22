@@ -308,13 +308,60 @@ async function loadHeroSection() {
 }
 
 /**
+ * Loads awards and certificates
+ */
+async function loadAwards() {
+    try {
+        const docRef = doc(db, "portfolio", "awards");
+        const docSnap = await getDoc(docRef);
+        
+        const awardsGrid = document.getElementById('awards-grid');
+        if (!awardsGrid) return;
+        
+        if (docSnap.exists() && docSnap.data().awards && docSnap.data().awards.length > 0) {
+            const awards = docSnap.data().awards;
+            let awardsHTML = '';
+            
+            awards.forEach(award => {
+                awardsHTML += `
+                    <div class="bg-gradient-to-r from-yellow-50 to-orange-50 p-6 rounded-2xl shadow-lg border border-yellow-200 hover:shadow-xl transition-all duration-300">
+                        <div class="flex items-start">
+                            <div class="bg-yellow-500 text-white p-3 rounded-full mr-4 flex-shrink-0">
+                                <i class="fas fa-award text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">${award.title}</h3>
+                                <p class="text-yellow-700 font-semibold mb-1">${award.issuer}</p>
+                                <p class="text-sm text-gray-500 mb-3">${award.date}</p>
+                                ${award.description ? `<p class="text-gray-600 text-sm mb-3">${award.description}</p>` : ''}
+                                ${award.credentialUrl ? `<a href="${award.credentialUrl}" target="_blank" class="inline-flex items-center text-yellow-600 hover:text-yellow-800 font-semibold text-sm transition-colors"><i class="fas fa-external-link-alt mr-2"></i>View Certificate</a>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            awardsGrid.innerHTML = `<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">${awardsHTML}</div>`;
+        } else {
+            awardsGrid.innerHTML = '<p class="text-center text-gray-600 col-span-full">No awards or certificates to display.</p>';
+        }
+    } catch (error) {
+        console.error("Error loading awards: ", error);
+        const awardsGrid = document.getElementById('awards-grid');
+        if (awardsGrid) {
+            awardsGrid.innerHTML = '<p class="text-center text-red-600 col-span-full">Error loading awards.</p>';
+        }
+    }
+}
+
+/**
  * Typing animation for hero section
  */
 function initTypingAnimation() {
     const typingText = document.getElementById('typing-text');
     if (!typingText) return;
     
-    const titles = ['Frontend Developer', 'Graphic Designer', 'UI/UX Designer'];
+    const titles = ['Sr. Design Excutive', 'Frontend Developer', 'UI/UX Designer', 'Web Developer', 'Creative Coder'];
     let currentIndex = 0;
     let currentText = '';
     let isDeleting = false;
@@ -536,6 +583,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loadSkills();
         loadEducation();
         loadExperience();
+        loadAwards();
         loadFeaturedBlogs();
         loadContactInfo();
         loadContactDetails();
