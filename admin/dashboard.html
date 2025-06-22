@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-gray-800 text-white p-4">
+            <h1 class="text-2xl font-bold mb-10">Admin Panel</h1>
+            <nav>
+                <a href="#about" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">About</a>
+                <a href="#skills" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Skills</a>
+                <a href="#experience" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Experience</a>
+                <a href="#education" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Education</a>
+                <a href="#projects" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Projects</a>
+                <a href="#blog" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Blog</a>
+                <button id="logout-btn" class="absolute bottom-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Logout</button>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-10">
+            <div id="content">
+                <!-- Content will be loaded here -->
+                <h2 class="text-3xl font-bold">Welcome to the Admin Dashboard</h2>
+                <p>Select a section from the sidebar to manage your content.</p>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="../assets/js/dashboard.js"></script>
+</body>
+</html> 
